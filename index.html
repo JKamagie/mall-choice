@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where should we go?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Where should we go?</h1>
+
+        <div class="choices">
+            <div class="choice" id="fer-choice-div">
+                <label for="fer-choice">Fer's choice:</label>
+                <select id="fer-choice">
+                    <option value="">Select a mall</option>
+                    <option value="Grand Indonesia">Grand Indonesia (Jakarta)</option>
+                    <option value="Plaza Indonesia">Plaza Indonesia (Jakarta)</option>
+                    <option value="Pacific Place">Pacific Place (Jakarta)</option>
+                    <option value="Taman Anggrek Mall">Taman Anggrek Mall (Jakarta)</option>
+                    <option value="Mall of Indonesia (MOI)">Mall of Indonesia (MOI) (Jakarta)</option>
+                    <option value="Senayan City">Senayan City (Jakarta)</option>
+                    <option value="Central Park Mall">Central Park Mall (Jakarta)</option>
+                    <option value="Kota Kasablanka">Kota Kasablanka (Jakarta)</option>
+                    <option value="Mall Summarecon Bekasi">Mall Summarecon Bekasi (Bekasi)</option>
+                </select>
+                <button onclick="submitChoice('fer')">Submit Fer's Choice</button>
+            </div>
+
+            <div class="choice" id="lar-choice-div">
+                <label for="lar-choice">Lar's choice:</label>
+                <select id="lar-choice">
+                    <option value="">Select a mall</option>
+                    <option value="Grand Indonesia">Grand Indonesia (Jakarta)</option>
+                    <option value="Plaza Indonesia">Plaza Indonesia (Jakarta)</option>
+                    <option value="Pacific Place">Pacific Place (Jakarta)</option>
+                    <option value="Taman Anggrek Mall">Taman Anggrek Mall (Jakarta)</option>
+                    <option value="Mall of Indonesia (MOI)">Mall of Indonesia (MOI) (Jakarta)</option>
+                    <option value="Senayan City">Senayan City (Jakarta)</option>
+                    <option value="Central Park Mall">Central Park Mall (Jakarta)</option>
+                    <option value="Kota Kasablanka">Kota Kasablanka (Jakarta)</option>
+                    <option value="Mall Summarecon Bekasi">Mall Summarecon Bekasi (Bekasi)</option>
+                </select>
+                <button onclick="submitChoice('lar')">Submit Lar's Choice</button>
+            </div>
+        </div>
+
+        <p id="result"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
