@@ -1,74 +1,63 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
 }
 
 .container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 100%;
-    max-width: 400px;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 2.5em;
+    color: #ffffff; /* White text for the title */
 }
 
 .choices {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    width: 100%;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-.choice {
-    margin-bottom: 20px;
-    width: 100%;
+.choices div {
+    margin: 0 20px;
 }
 
 select {
+    font-size: 1.2em;
     padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    max-width: 250px;
+    width: 250px;
+    background-color: #333333; /* Dark select background */
+    color: #ffffff; /* White text in select dropdown */
+    border: 1px solid #555555; /* Lighter border */
     border-radius: 5px;
-    border: 1px solid #ccc;
+}
+
+select:focus {
+    outline: none;
+    border-color: #4CAF50; /* Highlight border when focused */
 }
 
 button {
+    font-size: 1.2em;
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
+    background-color: #4CAF50; /* Green button */
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
 }
 
 button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    background-color: #555555; /* Disabled button color */
 }
 
-p {
-    font-size: 18px;
+#result {
     margin-top: 20px;
-    font-weight: bold;
-    color: #333;
-}
-
-.hidden {
-    display: none;
+    font-size: 1.5em;
+    color: #eeeeee; /* Light result text */
 }
