@@ -4,51 +4,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Where should we go?</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .mall-list {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        h2 {
+            text-align: center;
+        }
+        .choices, .result-page {
+            display: none;
+        }
+        .result-page {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Where should we go?</h1>
+        <h2>Where should we go?</h2>
 
-        <div class="choices">
-            <div class="choice" id="fer-choice-div">
-                <label for="fer-choice">Fer's choice:</label>
-                <select id="fer-choice">
-                    <option value="">Select a mall</option>
-                    <option value="Grand Indonesia">Grand Indonesia (Jakarta)</option>
-                    <option value="Plaza Indonesia">Plaza Indonesia (Jakarta)</option>
-                    <option value="Pacific Place">Pacific Place (Jakarta)</option>
-                    <option value="Taman Anggrek Mall">Taman Anggrek Mall (Jakarta)</option>
-                    <option value="Mall of Indonesia (MOI)">Mall of Indonesia (MOI) (Jakarta)</option>
-                    <option value="Senayan City">Senayan City (Jakarta)</option>
-                    <option value="Central Park Mall">Central Park Mall (Jakarta)</option>
-                    <option value="Kota Kasablanka">Kota Kasablanka (Jakarta)</option>
-                    <option value="Mall Summarecon Bekasi">Mall Summarecon Bekasi (Bekasi)</option>
-                </select>
-                <button onclick="submitChoice('fer')">Submit Fer's Choice</button>
-            </div>
-
-            <div class="choice" id="lar-choice-div">
-                <label for="lar-choice">Lar's choice:</label>
-                <select id="lar-choice">
-                    <option value="">Select a mall</option>
-                    <option value="Grand Indonesia">Grand Indonesia (Jakarta)</option>
-                    <option value="Plaza Indonesia">Plaza Indonesia (Jakarta)</option>
-                    <option value="Pacific Place">Pacific Place (Jakarta)</option>
-                    <option value="Taman Anggrek Mall">Taman Anggrek Mall (Jakarta)</option>
-                    <option value="Mall of Indonesia (MOI)">Mall of Indonesia (MOI) (Jakarta)</option>
-                    <option value="Senayan City">Senayan City (Jakarta)</option>
-                    <option value="Central Park Mall">Central Park Mall (Jakarta)</option>
-                    <option value="Kota Kasablanka">Kota Kasablanka (Jakarta)</option>
-                    <option value="Mall Summarecon Bekasi">Mall Summarecon Bekasi (Bekasi)</option>
-                </select>
-                <button onclick="submitChoice('lar')">Submit Lar's Choice</button>
-            </div>
+        <!-- Page for Fer to Choose -->
+        <div id="fer-page" class="choices">
+            <h3>Fer, please select the malls:</h3>
+            <form id="fer-form">
+                <label><input type="checkbox" name="mall" value="GI"> GI</label><br>
+                <label><input type="checkbox" name="mall" value="PI"> PI</label><br>
+                <label><input type="checkbox" name="mall" value="PP"> PP</label><br>
+                <label><input type="checkbox" name="mall" value="TA"> TA</label><br>
+                <label><input type="checkbox" name="mall" value="MoI"> MoI</label><br>
+                <label><input type="checkbox" name="mall" value="Sency"> Sency</label><br>
+                <label><input type="checkbox" name="mall" value="CP"> CP</label><br>
+                <label><input type="checkbox" name="mall" value="Kokas"> Kokas</label><br>
+                <label><input type="checkbox" name="mall" value="SMB"> SMB</label><br>
+                <label><input type="checkbox" name="mall" value="MKG"> MKG</label><br>
+                <label><input type="checkbox" name="mall" value="PS"> PS</label><br>
+                <label><input type="checkbox" name="mall" value="AEONJGC"> AEON JGC</label><br>
+                <label><input type="checkbox" name="mall" value="GrandMetropolitan"> Grand Metropolitan</label><br>
+                <button type="button" id="fer-submit">Submit</button>
+            </form>
         </div>
 
-        <p id="result"></p>
+        <!-- Page for Lar to Choose -->
+        <div id="lar-page" class="choices">
+            <h3>Lar, please select the malls:</h3>
+            <form id="lar-form">
+                <label><input type="checkbox" name="mall" value="GI"> GI</label><br>
+                <label><input type="checkbox" name="mall" value="PI"> PI</label><br>
+                <label><input type="checkbox" name="mall" value="PP"> PP</label><br>
+                <label><input type="checkbox" name="mall" value="TA"> TA</label><br>
+                <label><input type="checkbox" name="mall" value="MoI"> MoI</label><br>
+                <label><input type="checkbox" name="mall" value="Sency"> Sency</label><br>
+                <label><input type="checkbox" name="mall" value="CP"> CP</label><br>
+                <label><input type="checkbox" name="mall" value="Kokas"> Kokas</label><br>
+                <label><input type="checkbox" name="mall" value="SMB"> SMB</label><br>
+                <label><input type="checkbox" name="mall" value="MKG"> MKG</label><br>
+                <label><input type="checkbox" name="mall" value="PS"> PS</label><br>
+                <label><input type="checkbox" name="mall" value="AEONJGC"> AEON JGC</label><br>
+                <label><input type="checkbox" name="mall" value="GrandMetropolitan"> Grand Metropolitan</label><br>
+                <button type="button" id="lar-submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Result Page -->
+        <div id="result-page" class="result-page">
+            <h3>Result:</h3>
+            <p id="result-text"></p>
+            <button type="button" id="restart" onclick="restart()">Start Over</button>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let ferChoices = [];
+        let larChoices = [];
+        let remainingMalls = ["GI", "PI", "PP", "TA", "MoI", "Sency", "CP", "Kokas", "SMB", "MKG", "PS", "AEONJGC", "GrandMetropolitan"];
+
+        // Show Fer's selection page
+        document.getElementById("fer-page").style.display = "block";
+
+        // Submit
+        document.getElementById("fer-submit").addEventListener("click", function() {
+            let selectedMalls = getSelectedMalls("fer-form");
+            if (selectedMalls.length > 0) {
+                ferChoices = selectedMalls;
+                document.getElementById("fer-page").style.display = "none";
+                document.getElementById("lar-page").style.display = "block";
+            } else {
+                alert("Fer, please select at least one mall.");
+            }
+        });
+
+        // Submit
+        document.getElementById("lar-submit").addEventListener("click", function() {
+            let selectedMalls = getSelectedMalls("lar-form");
+            if (selectedMalls.length > 0) {
+                larChoices = selectedMalls;
+                checkMatch();
+            } else {
+                alert("Lar, please select at least one mall.");
+            }
+        });
+
+        // Get selected malls
+        function getSelectedMalls(formId) {
+            let selected = [];
+            let checkboxes = document.querySelectorAll(`#${formId} input[type="checkbox"]:checked`);
+            checkboxes.forEach((checkbox) => {
+                selected.push(checkbox.value);
+            });
+            return selected;
+        }
+
+        // Check for matching malls
+        function checkMatch() {
+            let commonMalls = ferChoices.filter(mall => larChoices.includes(mall));
+
+            if (commonMalls.length === 1) {
+                document.getElementById("result-text").innerHTML = `Both selected the same mall: ${commonMalls[0]}`;
+                document.getElementById("result-page").style.display = "block";
+                document.getElementById("fer-page").style.display = "none";
+                document.getElementById("lar-page").style.display = "none";
+            } else if (commonMalls.length > 1) {
+                // Filter out non-matching malls
+                remainingMalls = commonMalls;
+                ferChoices = [];
+                larChoices = [];
+                // Hide previous selections and show the filtered options again
+                document.getElementById("lar-page").style.display = "none";
+                document.getElementById("fer-page").style.display = "block";
+                resetChoices();
+            } else {
+                document.getElementById("result-text").innerHTML = "No matching malls. Try again!";
+                document.getElementById("result-page").style.display = "block";
+                document.getElementById("fer-page").style.display = "none";
+                document.getElementById("lar-page").style.display = "none";
+            }
+        }
+
+        // Reset choices and adjust the available malls
+        function resetChoices() {
+            // Update the mall options for Fer
+            let ferForm = document.getElementById("fer-form");
+            let larForm = document.getElementById("lar-form");
+            const allMalls = ["GI", "PI", "PP", "TA", "MoI", "Sency", "CP", "Kokas", "SMB", "MKG", "PS", "AEONJGC", "GrandMetropolitan"];
+            
+            // Enable only the matching malls for the next round of selection
+            for (let mall of allMalls) {
+                let ferCheckbox = ferForm.querySelector(`input[value="${mall}"]`);
+                let larCheckbox = larForm.querySelector(`input[value="${mall}"]`);
+                
+                if (remainingMalls.includes(mall)) {
+                    ferCheckbox.disabled = false;
+                    larCheckbox.disabled = false;
+                } else {
+                    ferCheckbox.disabled = true;
+                    larCheckbox.disabled = true;
+                }
+            }
+        }
+
+        // Restart the process
+        function restart() {
+            remainingMalls = ["GI", "PI", "PP", "TA", "MoI", "Sency", "CP", "Kokas", "SMB", "MKG", "PS", "AEONJGC", "GrandMetropolitan"];
+            document.getElementById("result-page").style.display = "none";
+            document.getElementById("fer-page").style.display = "block";
+            resetChoices();
+        }
+    </script>
 </body>
 </html>
