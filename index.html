@@ -6,26 +6,27 @@
     <title>Where should we go?</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 400px;
             margin: auto;
             padding: 20px;
             background-color: white;
-            border-radius: 10px;
+            border: 2px dashed #333;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .mall-list {
             margin: 10px 0;
+            font-size: 12px;
         }
         button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border: none;
             cursor: pointer;
             margin-top: 10px;
@@ -36,12 +37,26 @@
         }
         h2 {
             text-align: center;
+            font-size: 16px;
         }
         .choices, .result-page {
             display: none;
         }
         .result-page {
             margin-top: 20px;
+            font-size: 14px;
+            padding: 10px;
+            background-color: #eee;
+        }
+        .receipt {
+            font-size: 14px;
+            margin-top: 20px;
+            border-top: 2px dashed #333;
+            padding-top: 20px;
+            text-align: center;
+        }
+        .receipt p {
+            margin: 4px 0;
         }
     </style>
 </head>
@@ -66,7 +81,7 @@
                 <label><input type="checkbox" name="mall" value="PS"> PS</label><br>
                 <label><input type="checkbox" name="mall" value="AEONJGC"> AEON JGC</label><br>
                 <label><input type="checkbox" name="mall" value="GrandMetropolitan"> Grand Metropolitan</label><br>
-                <button type="button" id="fer-submit">Submit</button>
+                <button type="button" id="fer-submit">Submit Fer's Choices</button>
             </form>
         </div>
 
@@ -87,27 +102,28 @@
                 <label><input type="checkbox" name="mall" value="PS"> PS</label><br>
                 <label><input type="checkbox" name="mall" value="AEONJGC"> AEON JGC</label><br>
                 <label><input type="checkbox" name="mall" value="GrandMetropolitan"> Grand Metropolitan</label><br>
-                <button type="button" id="lar-submit">Submit</button>
+                <button type="button" id="lar-submit">Submit Lar's Choices</button>
             </form>
         </div>
 
         <!-- Result Page -->
         <div id="result-page" class="result-page">
-            <h3>Result:</h3>
-            <p id="result-text"></p>
-            <button type="button" id="restart" onclick="restart()">Start Over</button>
+            <h3>Receipt:</h3>
+            <div id="receipt" class="receipt">
+                <p id="common-malls"></p>
+                <button type="button" id="restart" onclick="restart()">Start Over</button>
+            </div>
         </div>
     </div>
 
     <script>
         let ferChoices = [];
         let larChoices = [];
-        let remainingMalls = ["GI", "PI", "PP", "TA", "MoI", "Sency", "CP", "Kokas", "SMB", "MKG", "PS", "AEONJGC", "GrandMetropolitan"];
 
         // Show Fer's selection page
         document.getElementById("fer-page").style.display = "block";
 
-        // Submit
+        // Submit Fer's Choices
         document.getElementById("fer-submit").addEventListener("click", function() {
             let selectedMalls = getSelectedMalls("fer-form");
             if (selectedMalls.length > 0) {
@@ -119,7 +135,7 @@
             }
         });
 
-        // Submit
+        // Submit Lar's Choices
         document.getElementById("lar-submit").addEventListener("click", function() {
             let selectedMalls = getSelectedMalls("lar-form");
             if (selectedMalls.length > 0) {
@@ -143,57 +159,46 @@
         // Check for matching malls
         function checkMatch() {
             let commonMalls = ferChoices.filter(mall => larChoices.includes(mall));
-
+            
             if (commonMalls.length === 1) {
-                document.getElementById("result-text").innerHTML = `Both selected the same mall: ${commonMalls[0]}`;
+                document.getElementById("common-malls").textContent = `Both selected the same mall: ${commonMalls[0]}`;
                 document.getElementById("result-page").style.display = "block";
                 document.getElementById("fer-page").style.display = "none";
                 document.getElementById("lar-page").style.display = "none";
             } else if (commonMalls.length > 1) {
-                // Filter out non-matching malls
-                remainingMalls = commonMalls;
-                ferChoices = [];
-                larChoices = [];
-                // Hide previous selections and show the filtered options again
-                document.getElementById("lar-page").style.display = "none";
-                document.getElementById("fer-page").style.display = "block";
-                resetChoices();
+                // Filter out non-picked malls
+                let filteredMalls = commonMalls;
+
+                // Update the choices for Fer and Lar to select the final pick
+                resetChoices(filteredMalls);
+                document.getElementById("fer-page").style.display = "block";  // Only Fer's list will show during filtering
             } else {
-                document.getElementById("result-text").innerHTML = "No matching malls. Try again!";
+                document.getElementById("common-malls").textContent = "No matching malls.";
                 document.getElementById("result-page").style.display = "block";
                 document.getElementById("fer-page").style.display = "none";
                 document.getElementById("lar-page").style.display = "none";
             }
         }
 
-        // Reset choices and adjust the available malls
-        function resetChoices() {
-            // Update the mall options for Fer
-            let ferForm = document.getElementById("fer-form");
-            let larForm = document.getElementById("lar-form");
-            const allMalls = ["GI", "PI", "PP", "TA", "MoI", "Sency", "CP", "Kokas", "SMB", "MKG", "PS", "AEONJGC", "GrandMetropolitan"];
-            
-            // Enable only the matching malls for the next round of selection
-            for (let mall of allMalls) {
-                let ferCheckbox = ferForm.querySelector(`input[value="${mall}"]`);
-                let larCheckbox = larForm.querySelector(`input[value="${mall}"]`);
-                
-                if (remainingMalls.includes(mall)) {
-                    ferCheckbox.disabled = false;
-                    larCheckbox.disabled = false;
-                } else {
-                    ferCheckbox.disabled = true;
-                    larCheckbox.disabled = true;
-                }
-            }
+        // Reset choices for Fer and Lar
+        function resetChoices(filteredMalls) {
+            // Reset Fer's checkboxes
+            let checkboxesFer = document.querySelectorAll("#fer-form input[type='checkbox']");
+            checkboxesFer.forEach((checkbox) => {
+                checkbox.checked = false;
+                checkbox.disabled = !filteredMalls.includes(checkbox.value);
+            });
+
+            // Hide Lar's choices during filtering
+            document.getElementById("lar-page").style.display = "none";
         }
 
-        // Restart the process
+        // Restart process
         function restart() {
-            remainingMalls = ["GI", "PI", "PP", "TA", "MoI", "Sency", "CP", "Kokas", "SMB", "MKG", "PS", "AEONJGC", "GrandMetropolitan"];
+            ferChoices = [];
+            larChoices = [];
             document.getElementById("result-page").style.display = "none";
             document.getElementById("fer-page").style.display = "block";
-            resetChoices();
         }
     </script>
 </body>
